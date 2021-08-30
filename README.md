@@ -84,6 +84,14 @@ You can configure the number of lines used with the `ITERMPLOT_LINES` environmen
 ITERMPLOT_LINES=5 python3 simple.py
 ```
 
+### Using a custom image display command
+
+You can provide a custom command for displaying images using the
+`ITERMPLOT_IMAGE_DISPLAY_COMMAND` environment variable. For example:
+```{sh}
+ITERMPLOT_IMAGE_DISPLAY_COMMAND="kitty +kitten icat" python3 simple.py
+```
+
 ### Python 2 and Python 3 support
 
 Now supports Python 2, even if this makes me want to cry 😭

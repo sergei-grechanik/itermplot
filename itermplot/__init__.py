@@ -11,6 +11,7 @@ import six
 
 import numpy as np
 import matplotlib
+import tempfile
 import sys
 import os
 import io
@@ -39,6 +40,7 @@ try:
     THEME = os.getenv("ITERMPLOT", "")  # perhaps rename this now
     OUTFILE = os.getenv("ITERMPLOT_OUTFILE", "out.gif")
     PLOTFILE = os.getenv("ITERMPLOT_PLOTFILE", "plot.png")
+    IMAGE_DISPLAY_COMMAND = os.getenv("ITERMPLOT_IMAGE_DISPLAY_COMMAND", None)
     FRAMES = int(os.getenv("ITERMPLOT_FRAMES", "0"))
     COLORS = ColorConverter.colors
 except ValueError:
@@ -88,6 +90,13 @@ def imgcat(data, fn="plot.pdf"):
     than zero then advance the console `lines` number of blank lines, move
     back, and then output the image. This is the default behaviour if TMUX
     is detected (lines set to 10)."""
+
+    if IMAGE_DISPLAY_COMMAND:
+        with tempfile.NamedTemporaryFile() as tmp:
+            tmp.write(data)
+            tmp.flush()
+            os.system(IMAGE_DISPLAY_COMMAND + ' ' + tmp.name)
+            return
 
     lines = LINES
 
